@@ -9,7 +9,7 @@ ENV PHPSAML_SOURCE https://github.com/onelogin/php-saml/
 ENV PHPSAML_VERSION 2.10.6
 ENV WEB_REPO /var/www/html
 
-# Install required deb packages
+# Install required deb packages 增加安装vim fping
 RUN sed -i /etc/apt/sources.list -e 's/$/ non-free'/ && \
     apt-get update && apt-get -y upgrade && \
     rm /etc/apt/preferences.d/no-debian-php && \
@@ -66,6 +66,7 @@ RUN cp ${WEB_REPO}/config.dist.php ${WEB_REPO}/config.php && \
     -e "s/\['pass'\] = 'phpipamadmin'/\['pass'\] = getenv(\"MYSQL_ENV_MYSQL_PASSWORD\")/" \
     -e "s/\['port'\] = 3306;/\['port'\] = 3306;\n\n\$password_file = getenv(\"MYSQL_ENV_MYSQL_PASSWORD_FILE\");\nif(file_exists(\$password_file))\n\$db\['pass'\] = preg_replace(\"\/\\\\s+\/\", \"\", file_get_contents(\$password_file));/" \
     ${WEB_REPO}/config.php
+# 增加修改字符问题，解决更换简体中文不生效的情况。    
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales && sed -i -e 's/# zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && dpkg-reconfigure --frontend=noninteractive locales && update-locale LANG=zh_CN.UTF-8
 
 EXPOSE 80
