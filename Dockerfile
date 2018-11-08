@@ -1,3 +1,4 @@
+# 测试
 FROM php:5.6-apache
 MAINTAINER Pierre Cheynier <pierre.cheynier@gmail.com>
 
