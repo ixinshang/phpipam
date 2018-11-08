@@ -66,5 +66,6 @@ RUN cp ${WEB_REPO}/config.dist.php ${WEB_REPO}/config.php && \
     -e "s/\['pass'\] = 'phpipamadmin'/\['pass'\] = getenv(\"MYSQL_ENV_MYSQL_PASSWORD\")/" \
     -e "s/\['port'\] = 3306;/\['port'\] = 3306;\n\n\$password_file = getenv(\"MYSQL_ENV_MYSQL_PASSWORD_FILE\");\nif(file_exists(\$password_file))\n\$db\['pass'\] = preg_replace(\"\/\\\\s+\/\", \"\", file_get_contents(\$password_file));/" \
     ${WEB_REPO}/config.php
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales && sed -i -e 's/# zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && dpkg-reconfigure --frontend=noninteractive locales && update-locale LANG=zh_CN.UTF-8
 
 EXPOSE 80
