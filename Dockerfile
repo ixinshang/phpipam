@@ -9,7 +9,7 @@ ENV PHPSAML_SOURCE https://github.com/onelogin/php-saml/
 ENV PHPSAML_VERSION 2.10.6
 ENV WEB_REPO /var/www/html
 
-# Install required deb packages 增加安装vim fping
+# Install required deb packages,增加安装vim、fping.
 RUN sed -i /etc/apt/sources.list -e 's/$/ non-free'/ && \
     apt-get update && apt-get -y upgrade && \
     rm /etc/apt/preferences.d/no-debian-php && \
